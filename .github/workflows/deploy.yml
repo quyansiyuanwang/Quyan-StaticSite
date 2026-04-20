@@ -52,6 +52,7 @@ jobs:
         if: github.ref == 'refs/heads/master'
         run: |
           rsync -az --delete \
+            --exclude='.user.ini' \
             -e "ssh -i ~/.ssh/deploy_key -p ${{ secrets.SSH_PORT || '22' }}" \
             dist/ \
             ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.REMOTE_STATICSITE_PATH }}/
