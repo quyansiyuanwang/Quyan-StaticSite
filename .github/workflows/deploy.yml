@@ -2,7 +2,7 @@ name: Build and Deploy StaticSite
 
 on:
   push:
-    branches: [master, dev]
+    branches: [master]
   workflow_dispatch:
 
 jobs:
@@ -40,10 +40,6 @@ jobs:
       - name: Build (Production)
         if: github.ref == 'refs/heads/master'
         run: pnpm run build:prod
-
-      - name: Build (Development)
-        if: github.ref == 'refs/heads/dev'
-        run: pnpm run build
 
       - name: Setup SSH
         run: |
