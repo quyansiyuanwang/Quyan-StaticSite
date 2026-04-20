@@ -10,7 +10,12 @@ function createTiles() {
   do {
     for (let i = arr.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1))
-      ;[arr[i], arr[j]] = [arr[j], arr[i]]
+      const temp = arr[i]
+      const swap = arr[j]
+      if (temp !== undefined && swap !== undefined) {
+        arr[i] = swap
+        arr[j] = temp
+      }
     }
   } while (arr.every((v, i) => v === i))
   return arr
@@ -79,7 +84,12 @@ function trySelect(i: number) {
   }
   const a = selected.value
   const b = i
-  ;[tiles.value[a], tiles.value[b]] = [tiles.value[b], tiles.value[a]]
+  const tileA = tiles.value[a]
+  const tileB = tiles.value[b]
+  if (tileA !== undefined && tileB !== undefined) {
+    tiles.value[a] = tileB
+    tiles.value[b] = tileA
+  }
   moves.value++
   selected.value = null
   checkSolved()
@@ -95,14 +105,13 @@ function reset() {
   solved.value = false
   selected.value = null
 }
-
 </script>
 
 <template>
   <div class="swap-wrap">
     <div class="swap-info">
       <span>步数：{{ moves }}</span>
-      <div style="display:flex; gap:0.6rem; align-items:center">
+      <div style="display: flex; gap: 0.6rem; align-items: center">
         <label class="img-upload">
           <input type="file" accept="image/*" @change="onFileChange" />上传图片
         </label>
@@ -113,8 +122,22 @@ function reset() {
     </div>
 
     <div class="swap-board" role="grid">
-      <div v-for="(tile, idx) in tiles" :key="idx" class="swap-cell" :class="{ selected: selected === idx }" @click="trySelect(idx)"
-        :style="tileImages[tile] ? { backgroundImage: `url(${tileImages[tile]})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}">
+      <div
+        v-for="(tile, idx) in tiles"
+        :key="idx"
+        class="swap-cell"
+        :class="{ selected: selected === idx }"
+        @click="trySelect(idx)"
+        :style="
+          tileImages[tile]
+            ? {
+                backgroundImage: `url(${tileImages[tile]})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+              }
+            : {}
+        "
+      >
         <span v-if="!tileImages[tile]">{{ tile + 1 }}</span>
       </div>
     </div>
@@ -124,22 +147,99 @@ function reset() {
 </template>
 
 <style scoped>
-.swap-wrap { display:flex; flex-direction:column; align-items:center; width:100% }
-.swap-info { display:flex; gap:1rem; align-items:center; margin-bottom:0.8rem; flex-wrap:wrap; justify-content:center }
-.swap-board { display:grid; grid-template-columns: repeat(4, 1fr); gap:12px; background:#f3f0ea; padding:12px; border-radius:10px; width: min(58vw, 560px); max-width:640px; aspect-ratio: 1 / 1; box-shadow: 0 10px 30px rgba(0,0,0,0.06); }
-.swap-cell { display:flex; align-items:center; justify-content:center; font-weight:700; border-radius:8px; border:none; background:#fff; box-shadow:0 1px 0 rgba(0,0,0,0.06); transition: transform 0.18s, box-shadow 0.18s; aspect-ratio:1/1; width:100%; font-size:1.2rem; cursor:pointer }
-.swap-cell.selected { transform: translateY(-6%); box-shadow: 0 8px 18px rgba(0,0,0,0.14); outline: 3px solid rgba(52,152,219,0.18) }
-.swap-cell:hover { transform: translateY(-3px) }
-.img-upload input { display:none }
-.img-upload { display:inline-flex; align-items:center; gap:0.4rem; padding:0.4rem 0.6rem; background:#3b3b3b; color:#fff; border-radius:6px; cursor:pointer }
-.preview-wrap img { margin-top:12px; width:120px; height:auto; border-radius:6px; box-shadow:0 6px 16px rgba(0,0,0,0.08) }
-.win { color: #27ae60; font-weight:bold }
-@media (max-width:900px) {
-  .swap-board { width: min(86vw, 420px); gap:10px; padding:10px }
-  .swap-cell { font-size:1.1rem }
+.swap-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
-@media (max-width:600px) {
-  .swap-board { width: min(92vw, 360px); padding:3vw; gap: 3vw }
-  .swap-cell { font-size:1rem }
+.swap-info {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 0.8rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.swap-board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  background: #f3f0ea;
+  padding: 12px;
+  border-radius: 10px;
+  width: min(58vw, 560px);
+  max-width: 640px;
+  aspect-ratio: 1 / 1;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+}
+.swap-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  border-radius: 8px;
+  border: none;
+  background: #fff;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+  transition:
+    transform 0.18s,
+    box-shadow 0.18s;
+  aspect-ratio: 1/1;
+  width: 100%;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.swap-cell.selected {
+  transform: translateY(-6%);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.14);
+  outline: 3px solid rgba(52, 152, 219, 0.18);
+}
+.swap-cell:hover {
+  transform: translateY(-3px);
+}
+.img-upload input {
+  display: none;
+}
+.img-upload {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.6rem;
+  background: #3b3b3b;
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.preview-wrap img {
+  margin-top: 12px;
+  width: 120px;
+  height: auto;
+  border-radius: 6px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+.win {
+  color: #27ae60;
+  font-weight: bold;
+}
+@media (max-width: 900px) {
+  .swap-board {
+    width: min(86vw, 420px);
+    gap: 10px;
+    padding: 10px;
+  }
+  .swap-cell {
+    font-size: 1.1rem;
+  }
+}
+@media (max-width: 600px) {
+  .swap-board {
+    width: min(92vw, 360px);
+    padding: 3vw;
+    gap: 3vw;
+  }
+  .swap-cell {
+    font-size: 1rem;
+  }
 }
 </style>

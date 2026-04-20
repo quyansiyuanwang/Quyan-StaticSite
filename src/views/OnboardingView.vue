@@ -51,7 +51,9 @@ const { t } = useI18n()
     </ol>
 
     <div class="cta-section">
-      <RouterLink to="/learning" class="button primary">{{ t('onboarding.getStarted') }}</RouterLink>
+      <RouterLink to="/learning" class="button primary">{{
+        t('onboarding.getStarted')
+      }}</RouterLink>
     </div>
   </section>
 </template>

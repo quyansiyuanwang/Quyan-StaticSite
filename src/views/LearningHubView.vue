@@ -41,7 +41,10 @@ const practiceAccuracy = computed(() => progressStore.practiceAccuracy)
       <article class="feature-card route-card">
         <p class="feature-kicker">{{ t('learningHub.vocabularyKicker') }}</p>
         <h3 class="feature-title">
-          <BookOpen :size="20" style="display: inline; vertical-align: middle; margin-right: 0.4rem" />
+          <BookOpen
+            :size="20"
+            style="display: inline; vertical-align: middle; margin-right: 0.4rem"
+          />
           {{ t('vocabulary.title') }}
         </h3>
         <p class="muted">{{ t('learningHub.vocabularyDesc') }}</p>
@@ -73,7 +76,10 @@ const practiceAccuracy = computed(() => progressStore.practiceAccuracy)
       <article class="feature-card route-card">
         <p class="feature-kicker">{{ t('learningResources.kicker') }}</p>
         <h3 class="feature-title">
-          <BookMarked :size="20" style="display: inline; vertical-align: middle; margin-right: 0.4rem" />
+          <BookMarked
+            :size="20"
+            style="display: inline; vertical-align: middle; margin-right: 0.4rem"
+          />
           {{ t('learningResources.title') }}
         </h3>
         <p class="muted">{{ t('learningResources.description') }}</p>

@@ -156,8 +156,10 @@ button {
   border-radius: 22px;
   background: var(--card);
   padding: 1.4rem 1.2rem 1.7rem 1.2rem;
-  box-shadow: var(--shadow), 0 2px 24px 0 rgba(212,87,43,0.06);
-  animation: rise-in 0.45s cubic-bezier(.7,-0.01,.3,1.01) both;
+  box-shadow:
+    var(--shadow),
+    0 2px 24px 0 rgba(212, 87, 43, 0.06);
+  animation: rise-in 0.45s cubic-bezier(0.7, -0.01, 0.3, 1.01) both;
   position: relative;
   overflow: hidden;
 }
@@ -253,13 +255,19 @@ button {
   border-radius: 18px;
   padding: 1.1rem 1rem 1.2rem 1rem;
   background: rgba(255, 255, 255, 0.82);
-  box-shadow: var(--shadow), 0 2px 12px 0 rgba(26,111,95,0.07);
-  transition: box-shadow 0.22s, transform 0.22s;
+  box-shadow:
+    var(--shadow),
+    0 2px 12px 0 rgba(26, 111, 95, 0.07);
+  transition:
+    box-shadow 0.22s,
+    transform 0.22s;
   position: relative;
   overflow: hidden;
 }
 .feature-card:hover {
-  box-shadow: 0 8px 32px rgba(212,87,43,0.13), 0 2px 12px 0 rgba(26,111,95,0.09);
+  box-shadow:
+    0 8px 32px rgba(212, 87, 43, 0.13),
+    0 2px 12px 0 rgba(26, 111, 95, 0.09);
   transform: translateY(-2px) scale(1.025);
 }
 .feature-card::before {
@@ -283,7 +291,7 @@ button {
   color: var(--accent);
   margin: 0 0 1.1rem 0;
   letter-spacing: 0.04em;
-  text-shadow: 0 2px 8px rgba(212,87,43,0.08);
+  text-shadow: 0 2px 8px rgba(212, 87, 43, 0.08);
 }
 .cta-group {
   display: flex;

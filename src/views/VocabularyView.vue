@@ -473,7 +473,12 @@ watch(
           type="button"
           class="button"
           :class="{ primary: !hideMemoryMastered && !showOnlyMastered }"
-          @click="() => { hideMemoryMastered = false; showOnlyMastered = false }"
+          @click="
+            () => {
+              hideMemoryMastered = false
+              showOnlyMastered = false
+            }
+          "
         >
           {{ t('vocabulary.showAll') }}
         </button>
@@ -481,7 +486,12 @@ watch(
           type="button"
           class="button"
           :class="{ primary: hideMemoryMastered }"
-          @click="() => { hideMemoryMastered = true; showOnlyMastered = false }"
+          @click="
+            () => {
+              hideMemoryMastered = true
+              showOnlyMastered = false
+            }
+          "
         >
           {{ t('vocabulary.hideMemoryMastered') }}
         </button>
@@ -489,7 +499,12 @@ watch(
           type="button"
           class="button"
           :class="{ primary: showOnlyMastered }"
-          @click="() => { hideMemoryMastered = false; showOnlyMastered = true }"
+          @click="
+            () => {
+              hideMemoryMastered = false
+              showOnlyMastered = true
+            }
+          "
         >
           {{ t('vocabulary.showOnlyMastered') }}
         </button>
@@ -550,12 +565,7 @@ watch(
           >
             {{ t('vocabulary.mastered') }}
           </button>
-          <button
-            v-else
-            class="button"
-            type="button"
-            @click="unmarkAsMastered(word.id)"
-          >
+          <button v-else class="button" type="button" @click="unmarkAsMastered(word.id)">
             {{ t('vocabulary.unmarkMastered') }}
           </button>
         </div>

@@ -3,7 +3,18 @@ import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useLearningProgressStore } from '@/stores/learningProgress'
-import { Zap, Dices, Brain, Sparkles, Grid3x3, Worm, Bomb, Box, Puzzle, ArrowRight } from 'lucide-vue-next'
+import {
+  Zap,
+  Dices,
+  Brain,
+  Sparkles,
+  Grid3x3,
+  Worm,
+  Bomb,
+  Box,
+  Puzzle,
+  ArrowRight,
+} from 'lucide-vue-next'
 
 const { t } = useI18n()
 const progressStore = useLearningProgressStore()
@@ -106,7 +117,10 @@ const popBestScore = computed(() => progressStore.state.game.popBestScore)
       <article class="feature-card route-card">
         <p class="feature-kicker">{{ t('gamesHub.popKicker') }}</p>
         <h3 class="feature-title">
-          <Sparkles :size="20" style="display: inline; vertical-align: middle; margin-right: 0.4rem" />
+          <Sparkles
+            :size="20"
+            style="display: inline; vertical-align: middle; margin-right: 0.4rem"
+          />
           {{ t('pop.title') }}
         </h3>
         <p class="muted">{{ t('gamesHub.popDesc') }}</p>
@@ -125,7 +139,10 @@ const popBestScore = computed(() => progressStore.state.game.popBestScore)
       <article class="feature-card route-card">
         <p class="feature-kicker">{{ t('gamesHub.game2048Kicker') }}</p>
         <h3 class="feature-title">
-          <Grid3x3 :size="20" style="display: inline; vertical-align: middle; margin-right: 0.4rem" />
+          <Grid3x3
+            :size="20"
+            style="display: inline; vertical-align: middle; margin-right: 0.4rem"
+          />
           {{ t('gamesHub.game2048Title') }}
         </h3>
         <p class="muted">{{ t('gamesHub.game2048Desc') }}</p>
@@ -193,7 +210,10 @@ const popBestScore = computed(() => progressStore.state.game.popBestScore)
       <article class="feature-card route-card">
         <p class="feature-kicker">{{ t('gamesHub.puzzleKicker') }}</p>
         <h3 class="feature-title">
-          <Puzzle :size="20" style="display: inline; vertical-align: middle; margin-right: 0.4rem" />
+          <Puzzle
+            :size="20"
+            style="display: inline; vertical-align: middle; margin-right: 0.4rem"
+          />
           {{ t('gamesHub.puzzleTitle') }}
         </h3>
         <p class="muted">{{ t('gamesHub.puzzleDesc') }}</p>

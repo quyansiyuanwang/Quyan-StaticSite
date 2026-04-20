@@ -103,24 +103,24 @@ export const routes: RouteRecordRaw[] = [
     path: '/game/memory',
     redirect: '/games/memory',
   },
-    {
-      path: '/onboarding',
-      name: 'onboarding',
-      component: () => import('@/views/OnboardingView.vue'),
-    },
-    {
-      path: '/explore',
-      name: 'explore',
-      component: () => import('@/views/ExploreView.vue'),
-    },
-    {
-      path: '/feedback',
-      name: 'feedback',
-      component: () => import('@/views/FeedbackView.vue'),
-    },
-    {
-      path: '/:pathMatch(.*)*',
-      name: 'not-found',
-      component: () => import('@/views/NotFoundView.vue'),
-    },
+  {
+    path: '/onboarding',
+    name: 'onboarding',
+    component: () => import('@/views/OnboardingView.vue'),
+  },
+  {
+    path: '/explore',
+    name: 'explore',
+    component: () => import('@/views/ExploreView.vue'),
+  },
+  {
+    path: '/feedback',
+    name: 'feedback',
+    component: () => import('@/views/FeedbackView.vue'),
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'not-found',
+    component: () => import('@/views/NotFoundView.vue'),
+  },
 ]

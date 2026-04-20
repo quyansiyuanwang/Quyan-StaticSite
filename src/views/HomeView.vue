@@ -18,7 +18,11 @@ const guessBest = computed(() => progressStore.state.game.guessBestAttempts)
 const featureLinks = [
   { to: '/about', title: 'about.title', desc: 'about.description' },
   { to: '/updates', title: 'updates.title', desc: 'updates.description' },
-  { to: '/learning/resources', title: 'learningResources.title', desc: 'learningResources.description' },
+  {
+    to: '/learning/resources',
+    title: 'learningResources.title',
+    desc: 'learningResources.description',
+  },
   { to: '/games/guide', title: 'gamesGuide.title', desc: 'gamesGuide.description' },
   { to: '/onboarding', title: 'onboarding.title', desc: 'onboarding.description' },
   { to: '/explore', title: 'explore.title', desc: 'explore.description' },
@@ -59,27 +63,34 @@ const featureLinks = [
       <aside class="hero-panel fade-up">
         <p class="feature-kicker">highlight</p>
         <h3 class="feature-title">{{ t('home.exploreMore') }}</h3>
-        <p class="muted">
-          qysyw 静态站把学习、练习、小游戏与辅助内容整合成一个更轻量的探索空间。
-        </p>
+        <p class="muted">qysyw 静态站把学习、练习、小游戏与辅助内容整合成一个更轻量的探索空间。</p>
         <div class="hero-stat-stack">
           <div class="stat accent-stat">
             <p class="stat-label">
-              <Trophy :size="16" style="display: inline; vertical-align: middle; margin-right: 0.3rem" />
+              <Trophy
+                :size="16"
+                style="display: inline; vertical-align: middle; margin-right: 0.3rem"
+              />
               {{ t('home.statMastered') }}
             </p>
             <p class="stat-value">{{ masteredCount }}</p>
           </div>
           <div class="stat accent-stat soft">
             <p class="stat-label">
-              <Target :size="16" style="display: inline; vertical-align: middle; margin-right: 0.3rem" />
+              <Target
+                :size="16"
+                style="display: inline; vertical-align: middle; margin-right: 0.3rem"
+              />
               {{ t('home.statWrongNotebook') }}
             </p>
             <p class="stat-value">{{ wrongNotebookCount }}</p>
           </div>
           <div class="stat accent-stat mint">
             <p class="stat-label">
-              <TrendingUp :size="16" style="display: inline; vertical-align: middle; margin-right: 0.3rem" />
+              <TrendingUp
+                :size="16"
+                style="display: inline; vertical-align: middle; margin-right: 0.3rem"
+              />
               {{ t('home.statPracticeAccuracy') }}
             </p>
             <p class="stat-value">{{ practiceAccuracy }}%</p>
@@ -117,7 +128,10 @@ const featureLinks = [
           <p class="muted">{{ t('home.gamesDescription') }}</p>
           <div class="mini-stats stacked-mini-stats">
             <span>{{ t('home.statBestGame') }} · {{ bestMoves || '-' }}</span>
-            <span>{{ t('home.statBestReaction') }} · {{ reactionBest ? `${reactionBest}ms` : '-' }}</span>
+            <span
+              >{{ t('home.statBestReaction') }} ·
+              {{ reactionBest ? `${reactionBest}ms` : '-' }}</span
+            >
             <span>{{ t('home.statBestGuess') }} · {{ guessBest || '-' }}</span>
           </div>
           <div class="cta-group compact-cta-group">

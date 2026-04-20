@@ -44,21 +44,28 @@ function collectGroupForBoard(board: PopCell[][], startRow: number, startCol: nu
 // 自动打乱棋盘直到有可消组合
 function shuffleBoardUntilMatch(board: PopCell[][]): PopCell[][] {
   let tries = 0
-  let newBoard = board.map(row => row.slice())
+  const newBoard = board.map((row) => row.slice())
   while (!hasAnyMatch(newBoard) && tries < 10) {
     // 打乱所有cell
     const allCells = newBoard.flat()
     for (let i = allCells.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1))
       const tmp = allCells[i]
-      allCells[i] = allCells[j]
-      allCells[j] = tmp
+      const swap = allCells[j]
+      if (tmp && swap) {
+        allCells[i] = swap
+        allCells[j] = tmp
+      }
     }
     // 重新填充
     let idx = 0
     for (let row = 0; row < BOARD_ROWS; row++) {
       for (let col = 0; col < BOARD_COLS; col++) {
-        newBoard[row][col] = allCells[idx++]
+        const cell = allCells[idx++]
+        const targetRow = newBoard[row]
+        if (cell && targetRow) {
+          targetRow[col] = cell
+        }
       }
     }
     tries++
@@ -313,7 +320,8 @@ const collapseAndRefillBoard = (removed: PopPoint[]): PopCell[][] => {
       const nextCell = kept[index] ?? null
       const rowCells = nextBoard[row]
       if (!rowCells) continue
-      if (nextCell && (!board.value[row][col] || board.value[row][col].id !== nextCell.id)) {
+      const currentCell = board.value[row]?.[col]
+      if (nextCell && (!currentCell || currentCell.id !== nextCell.id)) {
         newFallingMap[nextCell.id] = true
       }
       rowCells[col] = nextCell

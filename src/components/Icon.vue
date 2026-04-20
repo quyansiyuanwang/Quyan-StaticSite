@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import { computed, type Component } from 'vue'
 
@@ -19,13 +20,7 @@ const sizeValue = computed(() => {
 </script>
 
 <template>
-  <component
-    :is="name"
-    :size="sizeValue"
-    :color="color"
-    :stroke-width="strokeWidth"
-    class="icon"
-  />
+  <component :is="name" :size="sizeValue" :color="color" :stroke-width="strokeWidth" class="icon" />
 </template>
 
 <style scoped>

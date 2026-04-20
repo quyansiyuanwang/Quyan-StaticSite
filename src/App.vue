@@ -64,7 +64,10 @@ onMounted(() => {
         <RouterLink class="button mini" to="/faq">{{ t('faq.title') }}</RouterLink>
         <RouterLink class="button mini" to="/updates">{{ t('updates.title') }}</RouterLink>
       </div>
-      <div class="footer-meta muted" style="margin-top:1.2rem;text-align:center;font-size:0.98rem;">
+      <div
+        class="footer-meta muted"
+        style="margin-top: 1.2rem; text-align: center; font-size: 0.98rem"
+      >
         &copy; 2026 {{ t('app.title') }} · <RouterLink to="/">Home</RouterLink> ·
         <RouterLink to="/explore">Explore</RouterLink>
       </div>

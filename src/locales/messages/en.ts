@@ -3,19 +3,25 @@ export default {
     title: 'Getting Started',
     description: 'Quickly learn how to use this site efficiently.',
     welcome: 'Welcome to qysyw Static Site',
-    welcomeDesc: 'This is a static site focused on English learning and mini games. Let\'s quickly learn how to use it.',
+    welcomeDesc:
+      "This is a static site focused on English learning and mini games. Let's quickly learn how to use it.",
     step1Title: 'Navigation',
     step1Desc: 'Home, Learning, Games, and Explore pages are always accessible.',
-    step1Detail: 'Use the top navigation bar to quickly switch between zones. Learning and games are completely independent.',
+    step1Detail:
+      'Use the top navigation bar to quickly switch between zones. Learning and games are completely independent.',
     step2Title: 'Learning & Practice',
-    step2Desc: 'Vocabulary and practice modes, automatic wrong notebook, all progress saved locally.',
-    step2Detail: 'In the learning zone, you can choose word memory mode to browse vocabulary, or use practice mode for question drills. All wrong answers are automatically archived.',
+    step2Desc:
+      'Vocabulary and practice modes, automatic wrong notebook, all progress saved locally.',
+    step2Detail:
+      'In the learning zone, you can choose word memory mode to browse vocabulary, or use practice mode for question drills. All wrong answers are automatically archived.',
     step3Title: 'Mini Games',
     step3Desc: 'Multiple mini games in a separate zone, switch between fun and study anytime.',
-    step3Detail: 'The games zone includes 9 standalone mini games, from reaction speed to strategic thinking. All game records are saved.',
+    step3Detail:
+      'The games zone includes 9 standalone mini games, from reaction speed to strategic thinking. All game records are saved.',
     step4Title: 'Data & Privacy',
     step4Desc: 'All data saved locally, no registration required, completely privacy-friendly.',
-    step4Detail: 'Your learning progress, game records, language preferences, and all other data are saved in your local browser and never uploaded to any server.',
+    step4Detail:
+      'Your learning progress, game records, language preferences, and all other data are saved in your local browser and never uploaded to any server.',
     getStarted: 'Get Started',
   },
   explore: {
@@ -29,9 +35,11 @@ export default {
     learningPaths: 'Learning Paths',
     learningPathsDesc: 'Choose a learning path based on your level.',
     beginnerPath: 'Beginner Path',
-    beginnerPathDesc: 'Start with basic vocabulary, gradually build word count, and establish study habits.',
+    beginnerPathDesc:
+      'Start with basic vocabulary, gradually build word count, and establish study habits.',
     intermediatePath: 'Intermediate Path',
-    intermediatePathDesc: 'Use practice mode to reinforce memory and review mistakes with the wrong notebook.',
+    intermediatePathDesc:
+      'Use practice mode to reinforce memory and review mistakes with the wrong notebook.',
     advancedPath: 'Advanced Path',
     advancedPathDesc: 'Challenge exam mode, test comprehensive skills, and pursue higher accuracy.',
     navigationTips: 'Navigation Tips',
@@ -52,20 +60,24 @@ export default {
     title: 'Feedback & Contact',
     description: 'Have suggestions or issues? We welcome your feedback.',
     formTitle: 'Feedback Form',
-    formDesc: 'This static site does not support online forms. Please contact via the following methods.',
+    formDesc:
+      'This static site does not support online forms. Please contact via the following methods.',
     contactTitle: 'Contact Methods',
     contactGithub: 'GitHub Issues',
-    contactGithubDesc: 'Submit an issue in the project GitHub repository. The developer checks them regularly.',
+    contactGithubDesc:
+      'Submit an issue in the project GitHub repository. The developer checks them regularly.',
     contactEmail: 'Email Contact',
     contactEmailDesc: 'Find the developer email through the project homepage.',
     bugReportTitle: 'Bug Report Template',
-    bugReportDesc: 'If you encounter a problem, please provide the following information for quick diagnosis:',
+    bugReportDesc:
+      'If you encounter a problem, please provide the following information for quick diagnosis:',
     bugReport1: 'Problem description: Detailed explanation of the issue',
     bugReport2: 'Reproduction steps: How to trigger the problem',
     bugReport3: 'Browser info: Browser and version used',
     bugReport4: 'Screenshot or error message: If possible',
     thanksTitle: 'Thank You',
-    thanksDesc: 'Your feedback is very important to us and helps us continuously improve and optimize.',
+    thanksDesc:
+      'Your feedback is very important to us and helps us continuously improve and optimize.',
   },
   notFound: {
     title: 'Page Not Found',
@@ -84,18 +96,24 @@ export default {
     title: 'About qysyw Static Site',
     description: 'Learn about the qysyw static site vision and features.',
     mission: 'Mission & Vision',
-    missionDesc: 'qysyw Static Site is a static mirror site focused on English learning and mini games. We aim to provide an efficient, relaxed environment for study and play. We believe learning should be enjoyable, and entertainment can be beneficial.',
+    missionDesc:
+      'qysyw Static Site is a static mirror site focused on English learning and mini games. We aim to provide an efficient, relaxed environment for study and play. We believe learning should be enjoyable, and entertainment can be beneficial.',
     features: 'Core Features',
     feature1Title: 'Vocabulary Learning',
-    feature1Desc: 'Word memory and one-by-one drill modes with automatic wrong notebook tracking. All progress saved locally for privacy.',
+    feature1Desc:
+      'Word memory and one-by-one drill modes with automatic wrong notebook tracking. All progress saved locally for privacy.',
     feature2Title: 'Practice Mode',
-    feature2Desc: 'Multiple question types (EN→ZH, ZH→EN, ZH→EN input) with instant feedback. Wrong answers auto-archived for review.',
+    feature2Desc:
+      'Multiple question types (EN→ZH, ZH→EN, ZH→EN input) with instant feedback. Wrong answers auto-archived for review.',
     feature3Title: 'Mini Games Zone',
-    feature3Desc: '9 standalone games (Reaction Test, Number Guess, Memory Match, Pop Blast, 2048, Snake, Minesweeper, Tetris, Puzzle) for relaxation.',
+    feature3Desc:
+      '9 standalone games (Reaction Test, Number Guess, Memory Match, Pop Blast, 2048, Snake, Minesweeper, Tetris, Puzzle) for relaxation.',
     techStack: 'Technology Stack',
-    techStackDesc: 'Built with Vue 3 + TypeScript + Vite, using Pinia for state management. Supports bilingual switching (EN/ZH). All data stored locally.',
+    techStackDesc:
+      'Built with Vue 3 + TypeScript + Vite, using Pinia for state management. Supports bilingual switching (EN/ZH). All data stored locally.',
     privacy: 'Privacy Protection',
-    privacyDesc: 'All learning and game progress is saved in your local browser. No account required, no server tracking, completely privacy-friendly.',
+    privacyDesc:
+      'All learning and game progress is saved in your local browser. No account required, no server tracking, completely privacy-friendly.',
   },
   faq: {
     title: 'FAQ',
@@ -134,9 +152,11 @@ export default {
     planned3: 'More Mini Games',
     planned3Desc: 'Continuously add new casual mini games.',
     v2026_04_20: '2026-04-20 First Content Expansion',
-    v2026_04_20_desc: 'Added About, FAQ, Updates, Learning Resources, and Games Guide pages. Home and hub entries enhanced. Added Lucide Icons library for better visual experience.',
+    v2026_04_20_desc:
+      'Added About, FAQ, Updates, Learning Resources, and Games Guide pages. Home and hub entries enhanced. Added Lucide Icons library for better visual experience.',
     v2026_04_15: '2026-04-15 Initial Release',
-    v2026_04_15_desc: 'Released base version with vocabulary learning, practice mode, 9 mini games, bilingual support, and other core features.',
+    v2026_04_15_desc:
+      'Released base version with vocabulary learning, practice mode, 9 mini games, bilingual support, and other core features.',
   },
   learningResources: {
     title: 'Learning Resources',
@@ -144,32 +164,40 @@ export default {
     kicker: 'Learning Expansion',
     cta: 'View Resources',
     methodsTitle: 'Study Methods',
-    methodsDesc: 'Scientific and efficient learning strategies to help you master vocabulary better.',
+    methodsDesc:
+      'Scientific and efficient learning strategies to help you master vocabulary better.',
     method1Title: 'Spaced Repetition',
-    method1Desc: 'Based on the Ebbinghaus forgetting curve, review when memory is about to fade to improve long-term retention. Review yesterday\'s content daily and this week\'s content weekly.',
+    method1Desc:
+      "Based on the Ebbinghaus forgetting curve, review when memory is about to fade to improve long-term retention. Review yesterday's content daily and this week's content weekly.",
     method2Title: 'Active Recall',
-    method2Desc: 'Don\'t just passively read words. Try to actively recall meanings and examples. Use practice mode for self-testing, which is more effective than simple memorization.',
+    method2Desc:
+      "Don't just passively read words. Try to actively recall meanings and examples. Use practice mode for self-testing, which is more effective than simple memorization.",
     method3Title: 'Contextual Learning',
-    method3Desc: 'Learn words in real contexts through example sentences. Try making sentences with new words to deepen memory.',
+    method3Desc:
+      'Learn words in real contexts through example sentences. Try making sentences with new words to deepen memory.',
     tipsTitle: 'Study Tips',
     tipsDesc: 'Practical tips to make learning easier and more efficient.',
     tip1: 'Study at a fixed time daily to build habits',
     tip2: 'Start with simple words and gradually increase difficulty',
     tip3: 'Use the wrong notebook to review mistakes',
     tip4: 'Combine practice mode to reinforce memory',
-    tip5: 'Don\'t overdo it - master 10-20 new words daily',
+    tip5: "Don't overdo it - master 10-20 new words daily",
     scheduleTitle: 'Recommended Study Plans',
     scheduleDesc: 'Choose a learning pace that fits your schedule.',
     schedule1Title: 'Easy Mode (15 min/day)',
-    schedule1Desc: 'Learn 10 new words + review 20 old words daily. Suitable for beginners or those with limited time.',
+    schedule1Desc:
+      'Learn 10 new words + review 20 old words daily. Suitable for beginners or those with limited time.',
     schedule2Title: 'Standard Mode (30 min/day)',
-    schedule2Desc: 'Learn 20 new words + review 40 old words + 10 practice questions daily. Suitable for most learners.',
+    schedule2Desc:
+      'Learn 20 new words + review 40 old words + 10 practice questions daily. Suitable for most learners.',
     schedule3Title: 'Sprint Mode (60 min/day)',
-    schedule3Desc: 'Learn 30-50 new words + review 60 old words + 20 practice questions daily. Suitable for exam preparation.',
+    schedule3Desc:
+      'Learn 30-50 new words + review 60 old words + 20 practice questions daily. Suitable for exam preparation.',
     resourcesTitle: 'External Resources',
     resourcesDesc: 'Recommended wordbanks, tools, and learning websites.',
     r1: 'Efficient Vocabulary Techniques',
-    r1_desc: 'Use spaced repetition and the forgetting curve to optimize your review schedule and memory.',
+    r1_desc:
+      'Use spaced repetition and the forgetting curve to optimize your review schedule and memory.',
     r2: 'Recommended Wordbanks',
     r2_desc: 'Access CET4/6, IELTS, and other major exam wordbanks with category practice support.',
   },
@@ -202,7 +230,8 @@ export default {
     popTip3: 'Prioritize clearing large groups for higher scores',
     popTip4: 'Board auto-shuffles if no valid moves',
     classicGamesTitle: 'Classic Games',
-    classicGamesDesc: 'Gameplay instructions for 2048, Snake, Minesweeper, Tetris, Puzzle, and other classics.',
+    classicGamesDesc:
+      'Gameplay instructions for 2048, Snake, Minesweeper, Tetris, Puzzle, and other classics.',
     game2048Tip: 'Merge same numbers to reach 2048',
     snakeTip: 'Control the snake to eat food, avoid walls and yourself',
     minesweeperTip: 'Find all mines based on number hints',

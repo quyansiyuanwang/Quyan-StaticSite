@@ -24,6 +24,7 @@
     "format": "prettier --write src/ tests/",
     "format:check": "prettier --check src/ tests/",
     "check:all": "pnpm run lint:check && pnpm run format:check && pnpm run type-check && pnpm run test:ci",
+    "lint-format-check": "run-p lint format type-check",
     "precommit": "pnpm run check:all",
     "test": "pnpm run type:generate && vitest run",
     "test:ci": "pnpm run test",
