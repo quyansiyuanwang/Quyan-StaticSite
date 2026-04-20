@@ -1,0 +1,137 @@
+name: Auto Create Draft PR
+
+on:
+  push:
+    branches: [dev]
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+    if: |
+      !contains(github.event.head_commit.message, '[skip ci]') &&
+      !contains(github.event.head_commit.message, '[skip cd]') &&
+      !contains(github.event.head_commit.message, '[skip cicd]')
+    permissions:
+      pull-requests: write
+      contents: read
+    outputs:
+      pr_number: ${{ steps.create-or-update.outputs.pr_number }}
+      pr_title: ${{ steps.create-or-update.outputs.pr_title }}
+      pr_body: ${{ steps.create-or-update.outputs.pr_body }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create Draft PR to master
+        id: create-or-update
+        uses: actions/github-script@v7
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_BASE_URL: ${{ secrets.OPENAI_BASE_URL }}
+          OPENAI_MODEL: ${{ secrets.OPENAI_MODEL }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { data: prs } = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              head: `${context.repo.owner}:dev`,
+              base: 'master',
+              state: 'open',
+            });
+
+            const existingPr = prs.length > 0 ? prs[0] : null;
+
+            const { data: comparison } = await github.rest.repos.compareCommitsWithBasehead({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              basehead: 'master...dev',
+            });
+
+            const commitList = comparison.commits
+              .map(c => `- ${c.commit.message.split('\n')[0]} (${c.sha.slice(0, 7)})`)
+              .reverse()
+              .join('\n');
+
+            // Generate AI title (skip if PR already exists)
+            const commitMessages = comparison.commits.map(c => c.commit.message.split('\n')[0]).join('\n');
+            let aiTitle = '';
+            if (!existingPr) {
+              try {
+                const aiResponse = await fetch(`${process.env.OPENAI_BASE_URL}/v1/chat/completions`, {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+                  },
+                  body: JSON.stringify({
+                    model: process.env.OPENAI_MODEL,
+                    messages: [
+                      {
+                        role: 'system',
+                        content: 'You are a PR title generator. Given commit messages, generate a concise PR title following Conventional Commits format: "type(scope): description" (max 80 chars).\n\nTypes: feat, fix, docs, style, refactor, perf, test, chore, ci, build, revert\nScope: optional, e.g., staticSite, ui, content, i18n\n\nReturn ONLY the title text, no quotes or explanation.',
+                      },
+                      {
+                        role: 'user',
+                        content: `Commits:\n${commitMessages}`,
+                      },
+                    ],
+                    temperature: 0.3,
+                  }),
+                  signal: AbortSignal.timeout(30000),
+                });
+                const json = await aiResponse.json();
+                aiTitle = json.choices?.[0]?.message?.content?.trim() || '';
+              } catch (error) {
+                console.log('Failed to generate AI title:', error.message);
+              }
+            }
+
+            const date = new Date(Date.now() + 8 * 60 * 60 * 1000).toISOString().slice(0, 19).replace('T', ' ');
+            const title = aiTitle || `[StaticSite] Merge dev → master (${date} UTC+8)`;
+
+            const body = [
+              '## StaticSite Changes',
+              '',
+              'This PR was automatically created when changes were pushed to `dev`.',
+              '',
+              `### Commits (${comparison.ahead_by} ahead of master)`,
+              '',
+              commitList || '_No new commits._',
+            ].join('\n');
+
+            if (comparison.ahead_by === 0) {
+              console.log('dev is up to date with master, skipping PR creation.');
+              return;
+            }
+
+            let prNumber;
+            if (existingPr) {
+              prNumber = existingPr.number;
+              await github.rest.pulls.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: prNumber,
+                body,
+              });
+              console.log(`Updated body of PR #${prNumber}: ${existingPr.html_url}`);
+              core.setOutput('pr_number', prNumber);
+              core.setOutput('pr_title', existingPr.title);
+              core.setOutput('pr_body', body);
+            } else {
+              const { data: pr } = await github.rest.pulls.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title,
+                head: 'dev',
+                base: 'master',
+                body,
+                draft: true,
+              });
+              prNumber = pr.number;
+              console.log(`Created draft PR #${prNumber}: ${pr.html_url}`);
+              core.setOutput('pr_number', prNumber);
+              core.setOutput('pr_title', title);
+              core.setOutput('pr_body', body);
+            }

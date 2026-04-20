@@ -1,0 +1,62 @@
+name: Quality Check
+
+on:
+  pull_request:
+    branches: [master, dev]
+    types: [ready_for_review, synchronize]
+    paths:
+      - 'src/**'
+      - 'tests/**'
+      - 'scripts/**'
+      - 'index.html'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - 'tsconfig*.json'
+      - 'vite.config.ts'
+      - 'eslint.config.ts'
+      - 'vitest.config.ts'
+      - '.github/workflows/quality-check.yml'
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    if: |
+      !contains(github.event.pull_request.title, '[skip ci]') &&
+      !contains(github.event.pull_request.title, '[skip cicd]')
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        id: cache
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('pnpm-lock.yaml') }}
+
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: pnpm install --frozen-lockfile
+
+      - name: Generate route types
+        run: pnpm run type:generate
+
+      - name: Lint
+        run: pnpm run lint:check
+
+      - name: Format check
+        run: pnpm run format:check
+
+      - name: Type check
+        run: pnpm run type-check
