@@ -84,7 +84,7 @@ onBeforeUnmount(() => {
       </div>
     </div>
 
-    <button class="reaction-pad" :class="`phase-${phase}`" type="button" @click="handleTap">
+    <button class="reaction-pad" :class="`phase-${phase}`" type="button" @pointerdown="handleTap">
       <span>{{ t('reaction.tapArea') }}</span>
       <strong>{{ tip || t('reaction.idleTip') }}</strong>
     </button>
