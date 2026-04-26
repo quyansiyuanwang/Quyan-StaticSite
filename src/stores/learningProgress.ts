@@ -23,10 +23,21 @@ const createInitialState = (): ProgressState => ({
     bestSeconds: 0,
     reactionBestMs: 0,
     reactionPlays: 0,
+    reactionHistory: [],
     guessWins: 0,
     guessBestAttempts: 0,
     popBestScore: 0,
     popPlays: 0,
+    memoryNumberBestMs: 0,
+    memoryNumberPlays: 0,
+    memoryNumberCorrect: 0,
+    sequenceBestMs: 0,
+    sequencePlays: 0,
+    sequenceBestErrors: 999,
+    aimTrainBestScore: 0,
+    aimTrainPlays: 0,
+    shootingBestScore: 0,
+    shootingPlays: 0,
   },
   preferences: {
     locale: 'zh-CN',
@@ -136,10 +147,28 @@ const normalizeProgressState = (rawValue: unknown): ProgressState => {
       bestSeconds: toSafeInt(rawGame.bestSeconds, defaults.game.bestSeconds),
       reactionBestMs: toSafeInt(rawGame.reactionBestMs, defaults.game.reactionBestMs),
       reactionPlays: toSafeInt(rawGame.reactionPlays, defaults.game.reactionPlays),
+      reactionHistory: Array.isArray(rawGame.reactionHistory)
+        ? rawGame.reactionHistory
+            .filter((v): v is number => typeof v === 'number' && Number.isFinite(v))
+            .slice(0, 10)
+        : defaults.game.reactionHistory,
       guessWins: toSafeInt(rawGame.guessWins, defaults.game.guessWins),
       guessBestAttempts: toSafeInt(rawGame.guessBestAttempts, defaults.game.guessBestAttempts),
       popBestScore: toSafeInt(rawGame.popBestScore, defaults.game.popBestScore),
       popPlays: toSafeInt(rawGame.popPlays, defaults.game.popPlays),
+      memoryNumberBestMs: toSafeInt(rawGame.memoryNumberBestMs, defaults.game.memoryNumberBestMs),
+      memoryNumberPlays: toSafeInt(rawGame.memoryNumberPlays, defaults.game.memoryNumberPlays),
+      memoryNumberCorrect: toSafeInt(
+        rawGame.memoryNumberCorrect,
+        defaults.game.memoryNumberCorrect,
+      ),
+      sequenceBestMs: toSafeInt(rawGame.sequenceBestMs, defaults.game.sequenceBestMs),
+      sequencePlays: toSafeInt(rawGame.sequencePlays, defaults.game.sequencePlays),
+      sequenceBestErrors: toSafeInt(rawGame.sequenceBestErrors, defaults.game.sequenceBestErrors),
+      aimTrainBestScore: toSafeInt(rawGame.aimTrainBestScore, defaults.game.aimTrainBestScore),
+      aimTrainPlays: toSafeInt(rawGame.aimTrainPlays, defaults.game.aimTrainPlays),
+      shootingBestScore: toSafeInt(rawGame.shootingBestScore, defaults.game.shootingBestScore),
+      shootingPlays: toSafeInt(rawGame.shootingPlays, defaults.game.shootingPlays),
     },
     preferences: {
       locale: rawPreferences.locale === 'en' ? 'en' : 'zh-CN',
@@ -171,6 +200,12 @@ export const useLearningProgressStore = defineStore('learning-progress', () => {
     const total = state.value.practice.totalAnswered
     if (total <= 0) return 0
     return Math.round((state.value.practice.correctAnswered / total) * 100)
+  })
+  const reactionAverageMs = computed(() => {
+    const history = state.value.game.reactionHistory
+    if (history.length === 0) return 0
+    const sum = history.reduce((acc, val) => acc + val, 0)
+    return Math.round(sum / history.length)
   })
 
   const markWordMastered = (wordId: string): void => {
@@ -275,6 +310,8 @@ export const useLearningProgressStore = defineStore('learning-progress', () => {
     const safeMs = Math.max(1, Math.floor(ms))
     state.value.game.reactionPlays += 1
 
+    state.value.game.reactionHistory = [safeMs, ...state.value.game.reactionHistory].slice(0, 10)
+
     if (state.value.game.reactionBestMs === 0) {
       state.value.game.reactionBestMs = safeMs
     } else {
@@ -302,6 +339,47 @@ export const useLearningProgressStore = defineStore('learning-progress', () => {
     state.value.game.popBestScore = Math.max(state.value.game.popBestScore, safeScore)
   }
 
+  const saveMemoryNumberScore = (ms: number, isCorrect: boolean): void => {
+    const safeMs = Math.max(1, Math.floor(ms))
+    state.value.game.memoryNumberPlays += 1
+
+    if (isCorrect) {
+      state.value.game.memoryNumberCorrect += 1
+
+      if (state.value.game.memoryNumberBestMs === 0) {
+        state.value.game.memoryNumberBestMs = safeMs
+      } else {
+        state.value.game.memoryNumberBestMs = Math.min(state.value.game.memoryNumberBestMs, safeMs)
+      }
+    }
+  }
+
+  const saveSequenceScore = (ms: number, errors: number): void => {
+    const safeMs = Math.max(1, Math.floor(ms))
+    const safeErrors = Math.max(0, Math.floor(errors))
+    state.value.game.sequencePlays += 1
+
+    if (state.value.game.sequenceBestMs === 0) {
+      state.value.game.sequenceBestMs = safeMs
+    } else {
+      state.value.game.sequenceBestMs = Math.min(state.value.game.sequenceBestMs, safeMs)
+    }
+
+    state.value.game.sequenceBestErrors = Math.min(state.value.game.sequenceBestErrors, safeErrors)
+  }
+
+  const saveAimTrainScore = (score: number): void => {
+    const safeScore = Math.max(0, Math.floor(score))
+    state.value.game.aimTrainPlays += 1
+    state.value.game.aimTrainBestScore = Math.max(state.value.game.aimTrainBestScore, safeScore)
+  }
+
+  const saveShootingScore = (score: number): void => {
+    const safeScore = Math.max(0, Math.floor(score))
+    state.value.game.shootingPlays += 1
+    state.value.game.shootingBestScore = Math.max(state.value.game.shootingBestScore, safeScore)
+  }
+
   const setLocale = (locale: 'zh-CN' | 'en'): void => {
     state.value.preferences.locale = locale
   }
@@ -323,6 +401,7 @@ export const useLearningProgressStore = defineStore('learning-progress', () => {
     masteredCount,
     wrongNotebookCount,
     practiceAccuracy,
+    reactionAverageMs,
     markWordMastered,
     unmarkWordMastered,
     updateDailyGoal,
@@ -333,6 +412,10 @@ export const useLearningProgressStore = defineStore('learning-progress', () => {
     saveReactionScore,
     saveGuessRecord,
     savePopRecord,
+    saveMemoryNumberScore,
+    saveSequenceScore,
+    saveAimTrainScore,
+    saveShootingScore,
     setLocale,
     resetProgress,
   }

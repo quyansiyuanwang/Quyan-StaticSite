@@ -92,6 +92,26 @@ export const routes: RouteRecordRaw[] = [
     component: () => import('@/views/PuzzleGameView.vue'),
   },
   {
+    path: '/games/memory-number',
+    name: 'game-memory-number',
+    component: () => import('@/views/MemoryNumberGameView.vue'),
+  },
+  {
+    path: '/games/sequence',
+    name: 'game-sequence',
+    component: () => import('@/views/SequenceGameView.vue'),
+  },
+  {
+    path: '/games/aim-train',
+    name: 'game-aim-train',
+    component: () => import('@/views/AimTrainGameView.vue'),
+  },
+  {
+    path: '/games/shooting',
+    name: 'game-shooting',
+    component: () => import('@/views/ShootingGameView.vue'),
+  },
+  {
     path: '/vocabulary',
     redirect: '/learning/vocabulary',
   },

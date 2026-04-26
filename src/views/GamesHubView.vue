@@ -14,6 +14,9 @@ import {
   Box,
   Puzzle,
   ArrowRight,
+  Hash,
+  Target,
+  Crosshair,
 } from 'lucide-vue-next'
 
 const { t } = useI18n()
@@ -223,6 +226,83 @@ const popBestScore = computed(() => progressStore.state.game.popBestScore)
           style="display: inline-flex; margin-top: 0.8rem"
         >
           {{ t('gamesHub.enterPuzzle') }}
+          <ArrowRight :size="16" />
+        </RouterLink>
+      </article>
+
+      <article class="feature-card route-card">
+        <p class="feature-kicker">{{ t('gamesHub.memoryNumberKicker') }}</p>
+        <h3 class="feature-title">
+          <Hash :size="20" style="display: inline; vertical-align: middle; margin-right: 0.4rem" />
+          {{ t('memoryNumber.title') }}
+        </h3>
+        <p class="muted">{{ t('gamesHub.memoryNumberDesc') }}</p>
+        <RouterLink
+          to="/games/memory-number"
+          class="button primary"
+          style="display: inline-flex; margin-top: 0.8rem"
+        >
+          {{ t('gamesHub.enterMemoryNumber') }}
+          <ArrowRight :size="16" />
+        </RouterLink>
+      </article>
+
+      <article class="feature-card route-card">
+        <p class="feature-kicker">{{ t('gamesHub.sequenceKicker') }}</p>
+        <h3 class="feature-title">
+          <Grid3x3
+            :size="20"
+            style="display: inline; vertical-align: middle; margin-right: 0.4rem"
+          />
+          {{ t('sequence.title') }}
+        </h3>
+        <p class="muted">{{ t('gamesHub.sequenceDesc') }}</p>
+        <RouterLink
+          to="/games/sequence"
+          class="button"
+          style="display: inline-flex; margin-top: 0.8rem"
+        >
+          {{ t('gamesHub.enterSequence') }}
+          <ArrowRight :size="16" />
+        </RouterLink>
+      </article>
+
+      <article class="feature-card route-card">
+        <p class="feature-kicker">{{ t('gamesHub.aimTrainKicker') }}</p>
+        <h3 class="feature-title">
+          <Target
+            :size="20"
+            style="display: inline; vertical-align: middle; margin-right: 0.4rem"
+          />
+          {{ t('aimTrain.title') }}
+        </h3>
+        <p class="muted">{{ t('gamesHub.aimTrainDesc') }}</p>
+        <RouterLink
+          to="/games/aim-train"
+          class="button"
+          style="display: inline-flex; margin-top: 0.8rem"
+        >
+          {{ t('gamesHub.enterAimTrain') }}
+          <ArrowRight :size="16" />
+        </RouterLink>
+      </article>
+
+      <article class="feature-card route-card">
+        <p class="feature-kicker">{{ t('gamesHub.shootingKicker') }}</p>
+        <h3 class="feature-title">
+          <Crosshair
+            :size="20"
+            style="display: inline; vertical-align: middle; margin-right: 0.4rem"
+          />
+          {{ t('shooting.title') }}
+        </h3>
+        <p class="muted">{{ t('gamesHub.shootingDesc') }}</p>
+        <RouterLink
+          to="/games/shooting"
+          class="button primary"
+          style="display: inline-flex; margin-top: 0.8rem"
+        >
+          {{ t('gamesHub.enterShooting') }}
           <ArrowRight :size="16" />
         </RouterLink>
       </article>
