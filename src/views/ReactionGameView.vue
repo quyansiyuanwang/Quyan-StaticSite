@@ -17,6 +17,7 @@ let readyAt = 0
 
 const bestResultMs = computed(() => progressStore.state.game.reactionBestMs)
 const totalPlays = computed(() => progressStore.state.game.reactionPlays)
+const averageMs = computed(() => progressStore.reactionAverageMs)
 
 const clearWaitingTimeout = (): void => {
   if (waitingTimeout.value) {
@@ -77,6 +78,10 @@ onBeforeUnmount(() => {
       <div class="stat">
         <p class="stat-label">{{ t('reaction.best') }}</p>
         <p class="stat-value">{{ bestResultMs ? `${bestResultMs}ms` : '-' }}</p>
+      </div>
+      <div class="stat">
+        <p class="stat-label">{{ t('reaction.average') }}</p>
+        <p class="stat-value">{{ averageMs ? `${averageMs}ms` : '-' }}</p>
       </div>
       <div class="stat">
         <p class="stat-label">{{ t('reaction.plays') }}</p>

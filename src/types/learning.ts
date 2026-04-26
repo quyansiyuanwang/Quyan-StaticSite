@@ -56,10 +56,21 @@ export interface ProgressState {
     bestSeconds: number
     reactionBestMs: number
     reactionPlays: number
+    reactionHistory: number[]
     guessWins: number
     guessBestAttempts: number
     popBestScore: number
     popPlays: number
+    memoryNumberBestMs: number
+    memoryNumberPlays: number
+    memoryNumberCorrect: number
+    sequenceBestMs: number
+    sequencePlays: number
+    sequenceBestErrors: number
+    aimTrainBestScore: number
+    aimTrainPlays: number
+    shootingBestScore: number
+    shootingPlays: number
   }
   preferences: {
     locale: 'zh-CN' | 'en'
