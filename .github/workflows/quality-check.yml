@@ -4,18 +4,6 @@ on:
   pull_request:
     branches: [master, dev]
     types: [ready_for_review, synchronize]
-    paths:
-      - 'src/**'
-      - 'tests/**'
-      - 'scripts/**'
-      - 'index.html'
-      - 'package.json'
-      - 'pnpm-lock.yaml'
-      - 'tsconfig*.json'
-      - 'vite.config.ts'
-      - 'eslint.config.ts'
-      - 'vitest.config.ts'
-      - '.github/workflows/quality-check.yml'
 
 jobs:
   quality:
@@ -28,10 +16,30 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Detect relevant changes
+        id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            relevant:
+              - 'src/**'
+              - 'tests/**'
+              - 'scripts/**'
+              - 'index.html'
+              - 'package.json'
+              - 'pnpm-lock.yaml'
+              - 'tsconfig*.json'
+              - 'vite.config.ts'
+              - 'eslint.config.ts'
+              - 'vitest.config.ts'
+              - '.github/workflows/quality-check.yml'
+
       - name: Setup pnpm
+        if: steps.changes.outputs.relevant == 'true'
         uses: pnpm/action-setup@v4
 
       - name: Setup Node.js
+        if: steps.changes.outputs.relevant == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -39,6 +47,7 @@ jobs:
           cache-dependency-path: pnpm-lock.yaml
 
       - name: Cache node_modules
+        if: steps.changes.outputs.relevant == 'true'
         uses: actions/cache@v4
         id: cache
         with:
@@ -46,17 +55,25 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('pnpm-lock.yaml') }}
 
       - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
+        if: steps.changes.outputs.relevant == 'true' && steps.cache.outputs.cache-hit != 'true'
         run: pnpm install --frozen-lockfile
 
       - name: Generate route types
+        if: steps.changes.outputs.relevant == 'true'
         run: pnpm run type:generate
 
       - name: Lint
+        if: steps.changes.outputs.relevant == 'true'
         run: pnpm run lint:check
 
       - name: Format check
+        if: steps.changes.outputs.relevant == 'true'
         run: pnpm run format:check
 
       - name: Type check
+        if: steps.changes.outputs.relevant == 'true'
         run: pnpm run type-check
+
+      - name: Skip quality check
+        if: steps.changes.outputs.relevant != 'true'
+        run: echo "No relevant static site changes detected, skipping quality checks."
